@@ -11,7 +11,6 @@ namespace CatalogService.Models
         public ItemsInBasket() 
         {
             count = 0;
-            item = new Item();
         }
 
 

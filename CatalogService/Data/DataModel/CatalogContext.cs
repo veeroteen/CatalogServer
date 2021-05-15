@@ -8,9 +8,14 @@ namespace CatalogService.Data
 {
     public partial class CatalogContext : DbContext
     {
+
+        
         public CatalogContext()
         {
         }
+
+       
+
 
         public CatalogContext(DbContextOptions<CatalogContext> options)
             : base(options)
@@ -20,8 +25,8 @@ namespace CatalogService.Data
         public virtual DbSet<Client> Clients { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<Group> Groups { get; set; }
-        public virtual DbSet<Order> Orders { get; set; }
-        public virtual DbSet<Orders> Orders1 { get; set; }
+        public virtual DbSet<Order> Order { get; set; }
+        public virtual DbSet<Orders> Orders { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Street> Streets { get; set; }
         public virtual DbSet<SuplProduct> SuplProducts { get; set; }

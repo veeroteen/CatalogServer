@@ -30,6 +30,10 @@ namespace CatalogService
                 {
                     var context = services.GetRequiredService<CatalogContext>();
                     DbInitializer.Initialize(context);
+                    DBConnect.SetInstance(context);
+
+
+
                 }
                 catch (Exception ex)
                 {

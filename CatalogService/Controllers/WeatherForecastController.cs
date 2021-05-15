@@ -6,6 +6,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using CatalogService.Models;
 using CatalogService.StaticModels;
+using System.Collections.ObjectModel;
+using CatalogService.Data;
 
 namespace CatalogService.Controllers
 {
@@ -36,9 +38,28 @@ namespace CatalogService.Controllers
         }
 
         [HttpPost]
-        public Order Post([FromBody] Order value)
+        public ObservableCollection<ItemsInBasket> Post([FromBody] ObservableCollection<ItemsInBasket> request)
         {
-            return value;
+
+
+
+
+
+            foreach (var s in request)
+            {
+
+                var n = new Data.Order()
+                {
+                    Id = 1,
+                    Count = s.count,
+                    ItemId = Int32.Parse(s.item.Id)
+                };
+
+                DBConnect.GetInstance().Order.Add(n);
+
+            }
+            DBConnect.GetInstance().SaveChanges();
+            return request;
         }
 
 

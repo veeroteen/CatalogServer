@@ -11,43 +11,32 @@ namespace CatalogService.Data
         {
             context.Database.EnsureCreated();
 
-            var countries = new Country[]
+            var group = new Group[]
             {
-                new Country{Id = 1, Name = "Россия"},
-                new Country{Id = 2, Name = "США"},
-                new Country{Id = 3, Name = "Япония"},
+                new Group{Id = 1, Name = "Свечи зажигания"},
+                new Group{Id = 2, Name = "Ремни"},
+                new Group{Id = 3, Name = "Лампы"},
 
             };
-            foreach(var s in countries)
+            foreach(var s in group)
             {
-                context.Countries.Add(s);
-
-            }
-            var towns = new Town[]
-            {
-                new Town{Id = 1, Name = "Москва", Country = 1},
-                new Town{Id = 2, Name = "Миннеаполис", Country = 2},
-                new Town{Id = 3, Name = "Акита", Country = 3},
-
-            };
-            foreach (var s in towns)
-            {
-                context.Towns.Add(s);
-
-            }
-            var streets = new Street[]
-            {
-                new Street{Id = 1, Name = "Мосстройпуть", Town = 1},
-                new Street{Id = 2, Name = "Спрус", Town = 2},
-                new Street{Id = 3, Name = "Отемати", Town = 3},
-
-            };
-            foreach (var s in streets)
-            {
-                context.Streets.Add(s);
+                context.Groups.Add(s);
 
             }
             int i = context.SaveChanges();
+            var products = new Product[]
+            {
+                new Product{Id = 1, Name = "DENSO W20FPR-U", Group=1,Characteristics="Nickel",Description = "роизводитель DENSO обеспечивает надежность и качество производимой продукции."},
+
+
+            };
+            foreach (var s in products)
+            {
+                context.Products.Add(s);
+
+            }
+
+            i = context.SaveChanges();
 
 
 
