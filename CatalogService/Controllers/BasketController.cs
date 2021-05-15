@@ -1,4 +1,5 @@
 ﻿using CatalogService.Models;
+using CatalogService.StaticModels;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
@@ -12,21 +13,29 @@ namespace CatalogService.Controllers
     [Route("[controller]")]
     public class BasketController : ControllerBase
     {
-
+        string s = "gg";
 
         public BasketController()
         {
+           
         }
-
-
-        [HttpPost]
-        public Order Post([FromBody] Order order)
+        [HttpGet]
+        public IEnumerable<Order> Get(string s)
         {
-#if DEBUG
-            Console.WriteLine(order.ClientName);
-#endif
 
-            return order;
+            return Enumerable.Range(1, 1).Select(index => new Order 
+            {
+                ClientName = Static.order.ClientName,
+                Items = Static.order.Items
+            
+            }).ToArray();
+        }
+        [HttpPost]
+        public Order Post([FromBody] Order request)
+        {
+
+            Static.order = request;
+            return request;
         }
     }
 }

@@ -8,6 +8,11 @@ namespace CatalogService.Models
     public class Order
     {
         public string ClientName { get; set; }
-        public ItemsInBasket [] Items { get; set; }
+        public Item Items { get; set; }
+
+        public Order() 
+        {
+            Items = new Item();
+        }
     }
 }

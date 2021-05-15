@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CatalogService.Models;
+using CatalogService.StaticModels;
 
 namespace CatalogService.Controllers
 {
@@ -11,11 +13,7 @@ namespace CatalogService.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
+        int p = 0;
         private readonly ILogger<WeatherForecastController> _logger;
 
         public WeatherForecastController(ILogger<WeatherForecastController> logger)
@@ -24,22 +22,28 @@ namespace CatalogService.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        public IEnumerable<ItemsInBasket> Get(string s)
         {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(1),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
+            
+                return Enumerable.Range(1, 1).Select(index => new ItemsInBasket
+                {
+                    count = 1
+
+
+                })
+                .ToArray();
+            
         }
 
         [HttpPost]
-        public int Post([FromBody] int value)
+        public Order Post([FromBody] Order value)
         {
             return value;
         }
+
+
+
+
+
     }
 }

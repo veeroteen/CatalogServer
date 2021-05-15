@@ -11,7 +11,6 @@ namespace CatalogService.Data
         {
             context.Database.EnsureCreated();
 
-
             var countries = new Country[]
             {
                 new Country{Id = 1, Name = "Россия"},

@@ -14,5 +14,13 @@ namespace CatalogService.Models
         public string Description { get; set; }
         public string Img { get; set; }
 
+        public Item() 
+        {
+            Id = "ss";
+            Text = "fad";
+            Description = "sd";
+            Img = "sag";
+        }
+
     }
 }

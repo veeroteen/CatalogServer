@@ -6,11 +6,12 @@ namespace CatalogService.Models
 {
     public class ItemsInBasket
     {
-        public int Count { get; set; }
+        public int count { get; set; }
         public Item item { get; set; }
         public ItemsInBasket() 
         {
-            Count = 0;
+            count = 0;
+            item = new Item();
         }
 
 
