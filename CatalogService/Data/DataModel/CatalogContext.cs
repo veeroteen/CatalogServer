@@ -25,7 +25,7 @@ namespace CatalogService.Data
         public virtual DbSet<Client> Clients { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<Group> Groups { get; set; }
-        public virtual DbSet<Order> Order { get; set; }
+        public virtual DbSet<OrderDescriprion> OrderDescriprions { get; set; }
         public virtual DbSet<Orders> Orders { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Street> Streets { get; set; }
@@ -57,7 +57,7 @@ namespace CatalogService.Data
                     .IsFixedLength(true);
 
                 entity.Property(e => e.FatherName)
-                    .HasMaxLength(10)
+                    .HasMaxLength(20)
                     .IsFixedLength(true);
 
                 entity.Property(e => e.Login)
@@ -65,7 +65,7 @@ namespace CatalogService.Data
                     .IsFixedLength(true);
 
                 entity.Property(e => e.MobilePhone)
-                    .HasMaxLength(10)
+                    .HasMaxLength(12)
                     .IsFixedLength(true);
 
                 entity.Property(e => e.Name)
@@ -77,7 +77,7 @@ namespace CatalogService.Data
                     .IsFixedLength(true);
 
                 entity.Property(e => e.SecondName)
-                    .HasMaxLength(10)
+                    .HasMaxLength(20)
                     .IsFixedLength(true);
 
                 entity.HasOne(d => d.StreetNavigation)
@@ -93,7 +93,7 @@ namespace CatalogService.Data
                     .HasColumnName("ID");
 
                 entity.Property(e => e.Name)
-                    .HasMaxLength(10)
+                    .HasMaxLength(20)
                     .IsFixedLength(true);
             });
 
@@ -104,15 +104,15 @@ namespace CatalogService.Data
                     .HasColumnName("ID");
 
                 entity.Property(e => e.Name)
-                    .HasMaxLength(10)
+                    .HasMaxLength(20)
                     .IsFixedLength(true);
             });
 
-            modelBuilder.Entity<Order>(entity =>
+            modelBuilder.Entity<OrderDescriprion>(entity =>
             {
                 entity.HasNoKey();
 
-                entity.ToTable("Order");
+                entity.ToTable("OrderDescriprion");
 
                 entity.Property(e => e.Id).HasColumnName("ID");
 
@@ -142,8 +142,10 @@ namespace CatalogService.Data
 
                 entity.Property(e => e.DateCreate).HasColumnType("date");
 
+                entity.Property(e => e.Status).HasColumnName("Status");
+
                 entity.HasOne(d => d.Client)
-                    .WithMany(p => p.Order1s)
+                    .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.ClientId)
                     .HasConstraintName("FK_Orders_Clients");
             });
@@ -163,7 +165,7 @@ namespace CatalogService.Data
                     .IsFixedLength(true);
 
                 entity.Property(e => e.Name)
-                    .HasMaxLength(10)
+                    .HasMaxLength(20)
                     .IsFixedLength(true);
 
                 entity.HasOne(d => d.GroupNavigation)
@@ -179,7 +181,7 @@ namespace CatalogService.Data
                     .HasColumnName("ID");
 
                 entity.Property(e => e.Name)
-                    .HasMaxLength(10)
+                    .HasMaxLength(20)
                     .IsFixedLength(true);
 
                 entity.HasOne(d => d.TownNavigation)
@@ -216,11 +218,11 @@ namespace CatalogService.Data
                     .HasColumnName("ID");
 
                 entity.Property(e => e.Address)
-                    .HasMaxLength(10)
+                    .HasMaxLength(20)
                     .IsFixedLength(true);
 
                 entity.Property(e => e.Name)
-                    .HasMaxLength(10)
+                    .HasMaxLength(20)
                     .IsFixedLength(true);
 
                 entity.HasOne(d => d.StreetNavigation)
@@ -236,7 +238,7 @@ namespace CatalogService.Data
                     .HasColumnName("ID");
 
                 entity.Property(e => e.Name)
-                    .HasMaxLength(10)
+                    .HasMaxLength(20)
                     .IsFixedLength(true);
 
                 entity.HasOne(d => d.CountryNavigation)

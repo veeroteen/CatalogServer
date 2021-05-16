@@ -11,7 +11,7 @@ namespace CatalogService.Data
         public int? ClientId { get; set; }
         public DateTime? DateCreate { get; set; }
         public DateTime? DataReceave { get; set; }
-
+        public string Status { get; set; }
         public virtual Client Client { get; set; }
     }
 }

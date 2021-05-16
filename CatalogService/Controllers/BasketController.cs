@@ -1,11 +1,14 @@
 ﻿using CatalogService.Models;
-using CatalogService.StaticModels;
+
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CatalogService.Data;
+
+
 
 namespace CatalogService.Controllers
 {
@@ -19,23 +22,34 @@ namespace CatalogService.Controllers
         {
            
         }
+        /*
         [HttpGet]
-        public IEnumerable<Order> Get(string s)
+        public IEnumerable<OrderDescriprion> Get(string s)
         {
 
-            return Enumerable.Range(1, 1).Select(index => new Order 
+            return Enumerable.Range(1, 1).Select(index => new Models.Orders
             {
-                ClientName = Static.order.ClientName,
-                Items = Static.order.Items
+                ClientName = s
+
             
             }).ToArray();
         }
+        */
         [HttpPost]
-        public Order Post([FromBody] Order request)
+        public void Post([FromBody] ItemBuy quest)
         {
+            var instance = DBConnect.GetInstance();
 
-            Static.order = request;
-            return request;
+            instance.Orders.Add(new Data.Orders
+            {
+                ClientId = Int32.Parse(quest.IDUser),
+                Id = 1,
+                DateCreate = DateTime.Now
+            });
+            instance.SaveChanges();
+
+
+
         }
     }
 }

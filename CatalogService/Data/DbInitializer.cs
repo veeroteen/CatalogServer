@@ -9,18 +9,22 @@ namespace CatalogService.Data
     {
         public static void Initialize(CatalogContext context)
         {
-            context.Database.EnsureCreated();
+            //context.Database.EnsureCreated();
+            
 
-            var group = new Group[]
+
+
+
+
+            var group = new Supplier[]
             {
-                new Group{Id = 1, Name = "Свечи зажигания"},
-                new Group{Id = 2, Name = "Ремни"},
-                new Group{Id = 3, Name = "Лампы"},
+                new Supplier{Id = 2, Name = "Волга" , Address = "42", Street = 1},
+
 
             };
             foreach(var s in group)
             {
-                context.Groups.Add(s);
+                context.Suppliers.Add(s);
 
             }
             int i = context.SaveChanges();

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CatalogService.Models;
-using CatalogService.StaticModels;
+
 using System.Collections.ObjectModel;
 using CatalogService.Data;
 
@@ -24,17 +24,11 @@ namespace CatalogService.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<ItemsInBasket> Get(string s)
+        public IEnumerable<Supplier> Get(string s)
         {
-            
-                return Enumerable.Range(1, 1).Select(index => new ItemsInBasket
-                {
-                    count = 1
 
+            return DBConnect.GetInstance().Suppliers;
 
-                })
-                .ToArray();
-            
         }
 
         [HttpPost]
@@ -48,14 +42,14 @@ namespace CatalogService.Controllers
             foreach (var s in request)
             {
 
-                var n = new Data.Order()
+                var n = new Data.OrderDescriprion()
                 {
                     Id = 1,
                     Count = s.count,
                     ItemId = Int32.Parse(s.item.Id)
                 };
 
-                DBConnect.GetInstance().Order.Add(n);
+                DBConnect.GetInstance().OrderDescriprions.Add(n);
 
             }
             DBConnect.GetInstance().SaveChanges();

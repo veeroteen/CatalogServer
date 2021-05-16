@@ -29,8 +29,9 @@ namespace CatalogService
                 try
                 {
                     var context = services.GetRequiredService<CatalogContext>();
-                    DbInitializer.Initialize(context);
                     DBConnect.SetInstance(context);
+                    DbInitializer.Initialize(context);
+                    
 
 
 

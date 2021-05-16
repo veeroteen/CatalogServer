@@ -9,7 +9,7 @@ namespace CatalogService.Data
     {
         public Client()
         {
-            Order1s = new HashSet<Orders>();
+            Orders = new HashSet<Orders>();
         }
 
         public int Id { get; set; }
@@ -23,6 +23,6 @@ namespace CatalogService.Data
         public string Password { get; set; }
 
         public virtual Street StreetNavigation { get; set; }
-        public virtual ICollection<Orders> Order1s { get; set; }
+        public virtual ICollection<Orders> Orders { get; set; }
     }
 }
