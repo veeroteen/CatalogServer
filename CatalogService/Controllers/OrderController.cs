@@ -1,6 +1,7 @@
 ﻿using CatalogService.Data;
 using CatalogService.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,6 +15,14 @@ namespace CatalogService.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
+        private readonly ILogger<OrderController> _logger;
+        CatalogContext _context;
+        public OrderController(ILogger<OrderController> logger, CatalogContext context)
+        {
+            _logger = logger;
+            _context = context;
+        }
+
         [HttpGet]
         public IEnumerable<int> Get(string s)
         {
@@ -26,10 +35,6 @@ namespace CatalogService.Controllers
         public Models.Orders Post([FromBody] ObservableCollection<ItemsInBasket> request)
         {
 
-
-
-
-
             foreach (var s in request)
             {
 
@@ -40,10 +45,10 @@ namespace CatalogService.Controllers
                     ItemId = Int32.Parse(s.item.Id)
                 };
 
-                DBConnect.GetInstance().OrderDescriprions.Add(n);
+                _context.OrderDescriprions.Add(n);
 
             }
-            DBConnect.GetInstance().SaveChanges();
+            _context.SaveChanges();
 
             Models.Orders answ = new Models.Orders();
 

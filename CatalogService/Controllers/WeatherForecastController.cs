@@ -17,17 +17,21 @@ namespace CatalogService.Controllers
     {
         int p = 0;
         private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        CatalogContext _context;
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, CatalogContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         [HttpGet]
         public IEnumerable<Supplier> Get(string s)
         {
+            var context = _context;
+            context.Countries.Add(new Country() { Name = "Китай" });
+            context.SaveChanges();
 
-            return DBConnect.GetInstance().Suppliers;
+            return context.Suppliers;
 
         }
 
@@ -49,10 +53,10 @@ namespace CatalogService.Controllers
                     ItemId = Int32.Parse(s.item.Id)
                 };
 
-                DBConnect.GetInstance().OrderDescriprions.Add(n);
+                _context.OrderDescriprions.Add(n);
 
             }
-            DBConnect.GetInstance().SaveChanges();
+            _context.SaveChanges();
             return request;
         }
 

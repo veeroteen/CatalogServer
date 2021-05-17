@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,10 +13,16 @@ namespace CatalogService.Data
         {
             return instance;
         }
-        public static void SetInstance(CatalogContext context) 
+        public static void SetInstance(IServiceProvider service) 
         {
-            instance = context;
+            instance = service.GetRequiredService<CatalogContext>();
+            instance.Database.EnsureCreated();
         }
         public DBConnect() { }
+
+
+
+
+
     }
 }
