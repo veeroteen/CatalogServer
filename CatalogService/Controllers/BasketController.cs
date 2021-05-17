@@ -42,7 +42,7 @@ namespace CatalogService.Controllers
         {
             
 
-            _context.Orders.Add(new Data.Orders
+            _context.Orders.Add(new Data.Order
             {
                 ClientId = Int32.Parse(quest.IDUser),
                 Id = 1,

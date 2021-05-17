@@ -3,16 +3,15 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace CatalogService.Data
+namespace CatalogService.Data.DataModel
 {
     public partial class OrderDescriprion
     {
         public int Id { get; set; }
         public int? ItemId { get; set; }
         public int? Count { get; set; }
-        
 
-        public virtual Orders IdNavigation { get; set; }
+        public virtual Order IdNavigation { get; set; }
         public virtual Product Item { get; set; }
     }
 }

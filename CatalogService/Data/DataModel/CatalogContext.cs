@@ -4,18 +4,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
-namespace CatalogService.Data
+namespace CatalogService.Data.DataModel
 {
     public partial class CatalogContext : DbContext
     {
-
-        
         public CatalogContext()
         {
         }
-
-       
-
 
         public CatalogContext(DbContextOptions<CatalogContext> options)
             : base(options)
@@ -25,8 +20,8 @@ namespace CatalogService.Data
         public virtual DbSet<Client> Clients { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<Group> Groups { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<OrderDescriprion> OrderDescriprions { get; set; }
-        public virtual DbSet<Orders> Orders { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Street> Streets { get; set; }
         public virtual DbSet<SuplProduct> SuplProducts { get; set; }
@@ -38,7 +33,7 @@ namespace CatalogService.Data
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=Catalog;Trusted_Connection=True");
+                optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=Catalog;Trusted_Connection=True;");
             }
         }
 
@@ -48,9 +43,7 @@ namespace CatalogService.Data
 
             modelBuilder.Entity<Client>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
+                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Adress)
                     .HasMaxLength(15)
@@ -88,9 +81,7 @@ namespace CatalogService.Data
 
             modelBuilder.Entity<Country>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
+                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Name)
                     .HasMaxLength(20)
@@ -99,13 +90,31 @@ namespace CatalogService.Data
 
             modelBuilder.Entity<Group>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
+                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Name)
                     .HasMaxLength(20)
                     .IsFixedLength(true);
+            });
+
+            modelBuilder.Entity<Order>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.ClientId).HasColumnName("ClientID");
+
+                entity.Property(e => e.DataReceave).HasColumnType("date");
+
+                entity.Property(e => e.DateCreate).HasColumnType("date");
+
+                entity.Property(e => e.Status)
+                    .HasMaxLength(10)
+                    .IsFixedLength(true);
+
+                entity.HasOne(d => d.Client)
+                    .WithMany(p => p.Orders)
+                    .HasForeignKey(d => d.ClientId)
+                    .HasConstraintName("FK_Orders_Clients");
             });
 
             modelBuilder.Entity<OrderDescriprion>(entity =>
@@ -128,33 +137,9 @@ namespace CatalogService.Data
                     .HasConstraintName("FK_Order_Products");
             });
 
-            modelBuilder.Entity<Orders>(entity =>
-            {
-                entity.ToTable("Orders");
-
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
-
-                entity.Property(e => e.ClientId).HasColumnName("ClientID");
-
-                entity.Property(e => e.DataReceave).HasColumnType("date");
-
-                entity.Property(e => e.DateCreate).HasColumnType("date");
-
-                entity.Property(e => e.Status).HasColumnName("Status");
-
-                entity.HasOne(d => d.Client)
-                    .WithMany(p => p.Orders)
-                    .HasForeignKey(d => d.ClientId)
-                    .HasConstraintName("FK_Orders_Clients");
-            });
-
             modelBuilder.Entity<Product>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
+                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Characteristics)
                     .HasMaxLength(100)
@@ -176,9 +161,7 @@ namespace CatalogService.Data
 
             modelBuilder.Entity<Street>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
+                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Name)
                     .HasMaxLength(20)
@@ -192,30 +175,30 @@ namespace CatalogService.Data
 
             modelBuilder.Entity<SuplProduct>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => new { e.Idsupplier, e.Idproduct });
 
                 entity.ToTable("SuplProduct");
 
-                entity.Property(e => e.Idproduct).HasColumnName("IDProduct");
-
                 entity.Property(e => e.Idsupplier).HasColumnName("IDSupplier");
 
+                entity.Property(e => e.Idproduct).HasColumnName("IDProduct");
+
                 entity.HasOne(d => d.IdproductNavigation)
-                    .WithMany()
+                    .WithMany(p => p.SuplProducts)
                     .HasForeignKey(d => d.Idproduct)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_SuplProduct_Products");
 
                 entity.HasOne(d => d.IdsupplierNavigation)
-                    .WithMany()
+                    .WithMany(p => p.SuplProducts)
                     .HasForeignKey(d => d.Idsupplier)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_SuplProduct_Suppliers");
             });
 
             modelBuilder.Entity<Supplier>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
+                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Address)
                     .HasMaxLength(20)
@@ -233,9 +216,7 @@ namespace CatalogService.Data
 
             modelBuilder.Entity<Town>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
+                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Name)
                     .HasMaxLength(20)

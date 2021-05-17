@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace CatalogService.Data
+namespace CatalogService.Data.DataModel
 {
     public partial class Group
     {

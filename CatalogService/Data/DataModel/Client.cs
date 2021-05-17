@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace CatalogService.Data
+namespace CatalogService.Data.DataModel
 {
     public partial class Client
     {
         public Client()
         {
-            Orders = new HashSet<Orders>();
+            Orders = new HashSet<Order>();
         }
 
         public int Id { get; set; }
@@ -23,6 +23,6 @@ namespace CatalogService.Data
         public string Password { get; set; }
 
         public virtual Street StreetNavigation { get; set; }
-        public virtual ICollection<Orders> Orders { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }
