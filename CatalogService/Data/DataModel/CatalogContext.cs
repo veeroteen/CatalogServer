@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
-namespace CatalogService.Data.DataModel
+namespace CatalogService.Data.Datamodel
 {
     public partial class CatalogContext : DbContext
     {

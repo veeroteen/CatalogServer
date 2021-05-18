@@ -7,9 +7,9 @@ namespace CatalogService.Models
 {
     public class Orders
     {
-        public string ClientName { get; set; }
-        public DateTime CreateDate { get; set; }
+        public string ClientID { get; set; }
+        public string IDProduct { get; set; }
 
-        public string IDOrder { get; set; }
+
     }
 }

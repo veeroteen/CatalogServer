@@ -31,13 +31,29 @@ namespace CatalogService.Controllers
             .ToArray();
 
         }
+        /*
         [HttpPost]
         public Models.Orders Post([FromBody] ObservableCollection<ItemsInBasket> request)
         {
 
+
+            var OrdID = from i in _context.Orders
+                         where (i.ClientId == value.login && i.Password == value.password)
+                         select i.Id;
+
+            foreach (int id in quarry)
+            {
+                ID = id.ToString();
+            }
+
+
+
+
+
+
             foreach (var s in request)
             {
-
+                
                 var n = new Data.OrderDescriprion()
                 {
                     Id = 1,
@@ -57,5 +73,6 @@ namespace CatalogService.Controllers
 
 
         }
+        */
     }
 }

@@ -38,17 +38,43 @@ namespace CatalogService.Controllers
         }
         */
         [HttpPost]
-        public void Post([FromBody] ItemBuy quest)
+        public void Post([FromBody] Orders quest)
         {
-            
 
-            _context.Orders.Add(new Data.Order
+            var j = (from m in _context.Orders
+                     where m.ClientId == Int32.Parse(quest.ClientID) && m.Status == null
+                     select m.Id).FirstOrDefault();
+
+            if (j == 0) {
+
+                _context.Orders.Add(new Data.Order
+                {
+                    ClientId = Int32.Parse(quest.ClientID),
+                    DateCreate = DateTime.Now,
+                    Status = null
+                });
+                _context.SaveChanges();
+            }
+            var quarry = from m in _context.Orders
+                         where m.ClientId == Int32.Parse(quest.ClientID) && m.Status == null
+                         select m.Id;
+
+            _context.OrderDescriprions.Add(new Data.OrderDescriprion
             {
-                ClientId = Int32.Parse(quest.IDUser),
-                Id = 1,
-                DateCreate = DateTime.Now
+                Id = quarry.FirstOrDefault(),
+                Count = 1,
+                ItemId = Int32.Parse(quest.IDProduct)
             });
             _context.SaveChanges();
+
+
+
+
+
+
+
+
+
 
 
 
