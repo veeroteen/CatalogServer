@@ -4,10 +4,9 @@ using System.Text;
 
 namespace CatalogService.Models
 {
-    public class ItemsInBasket
+    public class ItemsInBasket : Item
     {
         public int count { get; set; }
-        public Item item { get; set; }
         public ItemsInBasket() 
         {
             count = 0;

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CatalogService.Models;
-
+using CatalogService.Data.Datamodel;
 using System.Collections.ObjectModel;
 using CatalogService.Data;
 
@@ -46,11 +46,11 @@ namespace CatalogService.Controllers
             foreach (var s in request)
             {
 
-                var n = new Data.OrderDescriprion()
+                var n = new OrderDescriprion()
                 {
                     Id = 1,
                     Count = s.count,
-                    ItemId = Int32.Parse(s.item.Id)
+                    ItemId = Int32.Parse(s.Id)
                 };
 
                 _context.OrderDescriprions.Add(n);

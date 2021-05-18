@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CatalogService.Data;
 using Microsoft.Extensions.Logging;
-
+using CatalogService.Data.Datamodel;
 namespace CatalogService.Controllers
 {
     [ApiController]
@@ -38,34 +38,48 @@ namespace CatalogService.Controllers
         }
         */
         [HttpPost]
-        public void Post([FromBody] Orders quest)
+        public void Post([FromBody] Models.Orders quest)
         {
 
-            var j = (from m in _context.Orders
+            var quarry = (from m in _context.Orders
                      where m.ClientId == Int32.Parse(quest.ClientID) && m.Status == null
                      select m.Id).FirstOrDefault();
 
-            if (j == 0) {
+            if (quarry == 0) {
 
-                _context.Orders.Add(new Data.Order
+                _context.Orders.Add(new Data.Datamodel.Order
                 {
                     ClientId = Int32.Parse(quest.ClientID),
                     DateCreate = DateTime.Now,
                     Status = null
                 });
                 _context.SaveChanges();
+                quarry = (from m in _context.Orders
+                              where m.ClientId == Int32.Parse(quest.ClientID) && m.Status == null
+                              select m.Id).FirstOrDefault();
             }
-            var quarry = from m in _context.Orders
-                         where m.ClientId == Int32.Parse(quest.ClientID) && m.Status == null
-                         select m.Id;
+           
 
-            _context.OrderDescriprions.Add(new Data.OrderDescriprion
+            var o = (from m in _context.OrderDescriprions
+                     where m.ItemId == Int32.Parse(quest.IDProduct) && m.Id== quarry
+                     select m).FirstOrDefault();
+            if (o == null)
             {
-                Id = quarry.FirstOrDefault(),
-                Count = 1,
-                ItemId = Int32.Parse(quest.IDProduct)
-            });
-            _context.SaveChanges();
+                _context.OrderDescriprions.Add(new OrderDescriprion
+                {
+                    Id = quarry,
+                    Count = 1,
+                    ItemId = Int32.Parse(quest.IDProduct)
+                });
+                _context.SaveChanges();
+
+            }
+            else
+            {
+                o.Count++;
+                _context.SaveChanges();
+            }
+            
 
 
 

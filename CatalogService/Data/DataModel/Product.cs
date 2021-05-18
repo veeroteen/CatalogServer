@@ -9,6 +9,7 @@ namespace CatalogService.Data.Datamodel
     {
         public Product()
         {
+            OrderDescriprions = new HashSet<OrderDescriprion>();
             SuplProducts = new HashSet<SuplProduct>();
         }
 
@@ -19,6 +20,7 @@ namespace CatalogService.Data.Datamodel
         public string Characteristics { get; set; }
 
         public virtual Group GroupNavigation { get; set; }
+        public virtual ICollection<OrderDescriprion> OrderDescriprions { get; set; }
         public virtual ICollection<SuplProduct> SuplProducts { get; set; }
     }
 }

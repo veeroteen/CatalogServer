@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace CatalogService.Data
+namespace CatalogService.Data.Datamodel
 {
     public partial class Supplier
     {

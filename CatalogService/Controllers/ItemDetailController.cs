@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using CatalogService.Models;
 using Newtonsoft.Json;
 using Microsoft.Extensions.Logging;
+using CatalogService.Data.Datamodel;
 
 namespace CatalogService.Controllers
 {

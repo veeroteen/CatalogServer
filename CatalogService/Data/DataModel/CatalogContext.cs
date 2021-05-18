@@ -119,21 +119,22 @@ namespace CatalogService.Data.Datamodel
 
             modelBuilder.Entity<OrderDescriprion>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => new { e.Id, e.ItemId });
 
                 entity.ToTable("OrderDescriprion");
 
                 entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.HasOne(d => d.IdNavigation)
-                    .WithMany()
+                    .WithMany(p => p.OrderDescriprions)
                     .HasForeignKey(d => d.Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Order_Orders");
 
                 entity.HasOne(d => d.Item)
-                    .WithMany()
+                    .WithMany(p => p.OrderDescriprions)
                     .HasForeignKey(d => d.ItemId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Order_Products");
             });
 

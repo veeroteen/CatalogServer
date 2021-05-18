@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using CatalogService.Data.Datamodel;
 
 
 namespace CatalogService.Controllers
@@ -31,48 +32,18 @@ namespace CatalogService.Controllers
             .ToArray();
 
         }
-        /*
+        
         [HttpPost]
-        public Models.Orders Post([FromBody] ObservableCollection<ItemsInBasket> request)
+        public void Post([FromBody] string request)
         {
 
 
-            var OrdID = from i in _context.Orders
-                         where (i.ClientId == value.login && i.Password == value.password)
-                         select i.Id;
-
-            foreach (int id in quarry)
-            {
-                ID = id.ToString();
-            }
-
-
-
-
-
-
-            foreach (var s in request)
-            {
-                
-                var n = new Data.OrderDescriprion()
-                {
-                    Id = 1,
-                    Count = s.count,
-                    ItemId = Int32.Parse(s.item.Id)
-                };
-
-                _context.OrderDescriprions.Add(n);
-
-            }
+            var k = (from m in _context.Orders
+                     where m.ClientId == Int32.Parse(request) && m.Status == null
+                     select m).FirstOrDefault();
+            k.Status = "Pending";
             _context.SaveChanges();
-
-            Models.Orders answ = new Models.Orders();
-
-            return answ;
-
-
-
         }
-        */
+        
     }
 }
