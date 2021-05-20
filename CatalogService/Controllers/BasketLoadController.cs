@@ -39,6 +39,9 @@ namespace CatalogService.Controllers
             var prod = from i in _context.OrderDescriprions
                          where (i.Id == orderid)
                          select i;
+            
+
+
 
             foreach (var i in prod)
             {
@@ -57,7 +60,7 @@ namespace CatalogService.Controllers
                        select m).FirstOrDefault();
                 i.Description = buff.Description;
                 i.Text = buff.Name;
-                i.Img = "ss.jpg";
+                i.Img = "plug.jpg";
             }
             return response.FirstOrDefault();
 

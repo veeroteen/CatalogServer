@@ -33,22 +33,47 @@ namespace CatalogService.Controllers
         }
         // POST api/<Login>
         [HttpPost]
-        public ItemDetailDescription Post([FromBody] string ID)
+        public ItemDetail Post([FromBody] string ID)
         {
-            ItemDetailDescription request = new ItemDetailDescription();
+            ItemDetail request = new ItemDetail();
             
 
 
             var quarry = from i in _context.Products
-                         where i.Id.ToString() == ID
+                         where i.Id == Int32.Parse(ID)
                          select i;
 
+            List<Characteristics> Ch = new List<Characteristics>()
+            {
+            new Characteristics()
+            {
+            Name = "Материал",
+            Value = "Никель"
+            }
+
+
+            };
+
+            var serdata = JsonConvert.SerializeObject(Ch);
             foreach (var id in quarry)
             {
-                request.Char = JsonConvert.DeserializeObject<List<Characteristics>>(id.Characteristics);
-                request.DescriptionFull = id.Description;
-            
+
+
+
+
+
+                request.Detail = new ItemDetailDescription()
+                {
+
+                    DescriptionFull = id.Description,
+                    Character = JsonConvert.DeserializeObject<List<Characteristics>>(serdata)
+                };
+                request.item = id.ConvertToItem();
+                
             }
+                
+               
+            
 
             return request;
         }

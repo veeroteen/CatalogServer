@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CatalogService.Models;
+using System;
 using System.Collections.Generic;
 
 #nullable disable
@@ -22,5 +23,20 @@ namespace CatalogService.Data.Datamodel
         public virtual Group GroupNavigation { get; set; }
         public virtual ICollection<OrderDescriprion> OrderDescriprions { get; set; }
         public virtual ICollection<SuplProduct> SuplProducts { get; set; }
+
+
+        public Item ConvertToItem() 
+        {
+            return (new Item()
+            {
+                Description = Description,
+                Id = Id.ToString(),
+                Img = "plug.jpg",
+                Text = Name
+            });
+
+        }
+
+
     }
 }
